@@ -13,14 +13,14 @@ export function useTodoItem() {
 
   const saveItem = (categoryId: string, itemId: string) => {
     if (editingItemText.value.trim()) {
-      const success = store.updateItemText(categoryId, itemId, editingItemText.value.trim());
-      if (!success) {
-        alert('An item with this text already exists in this category.');
-        return;
+      const result = store.updateItemText(categoryId, itemId, editingItemText.value.trim());
+      if (result && result.success) {
+        isEditingItem.value = null;
+        editingItemText.value = '';
+      } else {
+        alert(result?.error || 'An item with this text already exists in this category.');
       }
     }
-    isEditingItem.value = null;
-    editingItemText.value = '';
   };
 
   const cancelEditItem = () => {
@@ -30,13 +30,14 @@ export function useTodoItem() {
 
   const createItem = (categoryId: string, text: string) => {
     if (text.trim()) {
-      const success = store.addItem(categoryId, text.trim());
-      if (!success) {
-        alert('This item already exists in this category.');
+      const result = store.addItem(categoryId, text.trim());
+      if (result && result.success) {
+        return { success: true };
+      } else {
+        return { success: false, error: result?.error || 'Failed to add item.' };
       }
-      return success;
     }
-    return false;
+    return { success: false, error: 'Item text cannot be empty.' };
   };
 
   const toggleComplete = (categoryId: string, itemId: string) => {

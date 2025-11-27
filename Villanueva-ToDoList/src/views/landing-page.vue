@@ -10,15 +10,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-const emit = defineEmits<{
-  (e: 'navigate', page: string): void;
-}>();
-
+const router = useRouter();
 const startDate = ref('');
 
 const goToApp = () => {
-  emit('navigate', 'app');
+  router.push('/app');
 };
 
 onMounted(() => {

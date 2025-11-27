@@ -29,6 +29,14 @@ export const useTodoStore = defineStore('todo', () => {
 
   // Add new category
   const addCategory = (title: string) => {
+    // Check for duplicates (case-insensitive)
+    const exists = categories.value.some(
+      cat => cat.title.toLowerCase() === title.toLowerCase()
+    );
+    if (exists) {
+      return { success: false, error: 'A category with this name already exists.' };
+    }
+    
     const newCategory: TodoCategory = {
       id: Date.now().toString(),
       title,
@@ -36,16 +44,25 @@ export const useTodoStore = defineStore('todo', () => {
     };
     categories.value.push(newCategory);
     saveToStorage();
-    return newCategory.id;
+    return { success: true, id: newCategory.id };
   };
 
   // Update category title
   const updateCategoryTitle = (categoryId: string, newTitle: string) => {
     const category = categories.value.find(c => c.id === categoryId);
     if (category) {
+      // Check for duplicates (excluding current category)
+      const exists = categories.value.some(
+        c => c.id !== categoryId && c.title.toLowerCase() === newTitle.toLowerCase()
+      );
+      if (exists) {
+        return { success: false, error: 'A category with this name already exists.' };
+      }
       category.title = newTitle;
       saveToStorage();
+      return { success: true };
     }
+    return { success: false, error: 'Category not found.' };
   };
 
   // Delete category
@@ -64,7 +81,7 @@ export const useTodoStore = defineStore('todo', () => {
       // Check for duplicates
       const exists = category.items.some(item => item.text.toLowerCase() === text.toLowerCase());
       if (exists) {
-        return false;
+        return { success: false, error: 'This item already exists in this category.' };
       }
       const newItem: TodoItem = {
         id: Date.now().toString(),
@@ -73,9 +90,9 @@ export const useTodoStore = defineStore('todo', () => {
       };
       category.items.push(newItem);
       saveToStorage();
-      return true;
+      return { success: true };
     }
-    return false;
+    return { success: false, error: 'Category not found.' };
   };
 
   // Update item text
@@ -87,14 +104,15 @@ export const useTodoStore = defineStore('todo', () => {
         // Check for duplicates (excluding current item)
         const exists = category.items.some(i => i.id !== itemId && i.text.toLowerCase() === newText.toLowerCase());
         if (exists) {
-          return false;
+          return { success: false, error: 'An item with this text already exists in this category.' };
         }
         item.text = newText;
         saveToStorage();
-        return true;
+        return { success: true };
       }
+      return { success: false, error: 'Item not found.' };
     }
-    return false;
+    return { success: false, error: 'Category not found.' };
   };
 
   // Toggle item completion

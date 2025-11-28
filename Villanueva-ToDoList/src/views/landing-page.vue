@@ -2,31 +2,21 @@
   <div class="landing-container">
     <div class="landing-content">
       <h1 class="trainee-name">Lance Villanueva</h1>
-      <p class="start-date">Exercise started on: {{ startDate }}</p>
+      <p class="start-date">Exercise started on: November 24, 2025</p>
       <button class="go-to-app-button" @click="goToApp">Go to app</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const startDate = ref('');
-
 const goToApp = () => {
   router.push('/app');
 };
 
-onMounted(() => {
-  const date = new Date();
-  startDate.value = date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-});
+
 </script>
 
 <style scoped>

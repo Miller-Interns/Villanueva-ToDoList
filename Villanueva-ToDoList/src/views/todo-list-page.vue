@@ -4,14 +4,26 @@
       <div class="header-content">
         <h1>TO-DO List Exercise</h1>
         <button @click="goBack" class="back-btn">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 12L6 8L10 4"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
           Back to Landing
         </button>
       </div>
     </header>
-    
+
     <div class="content-wrapper">
       <div class="add-category-container">
         <div class="input-group">
@@ -19,21 +31,32 @@
             v-model="newCategoryTitle"
             @keyup.enter="handleAddCategory"
             @input="clearError"
-            :class="{ 'error': errorMessage }"
+            :class="{ error: errorMessage }"
             class="add-category-input"
             type="text"
             placeholder="Enter category title..."
           />
           <button @click="handleAddCategory" class="add-category-btn">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 4V16M4 10H16"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
             </svg>
             Add Category
           </button>
         </div>
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       </div>
-      
+
       <div class="categories-container">
         <todo-category
           v-for="category in store.categories"
@@ -41,12 +64,23 @@
           :category="category"
         />
       </div>
-      
+
       <div v-if="store.categories.length === 0" class="empty-state">
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 20H48M16 32H48M16 44H40" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="52" cy="52" r="10" fill="#ef4444" opacity="0.1"/>
-          <path d="M48 52H56M52 48V56" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16 20H48M16 32H48M16 44H40"
+            stroke="#9ca3af"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle cx="52" cy="52" r="10" fill="#ef4444" opacity="0.1" />
+          <path d="M48 52H56M52 48V56" stroke="#ef4444" stroke-width="2" stroke-linecap="round" />
         </svg>
         <h3>No categories yet</h3>
         <p>Create your first category above to get started!</p>
@@ -153,7 +187,9 @@ const goBack = () => {
   background: white;
   padding: 1.5rem;
   border-radius: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
   margin-bottom: 2rem;
   border: 1px solid #e5e7eb;
 }
@@ -264,25 +300,24 @@ const goBack = () => {
   .content-wrapper {
     padding: 1rem;
   }
-  
+
   .page-header {
     padding: 1rem;
   }
-  
+
   .header-content {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
-  
+
   .input-group {
     flex-direction: column;
   }
-  
+
   .add-category-btn {
     width: 100%;
     justify-content: center;
   }
 }
 </style>
-

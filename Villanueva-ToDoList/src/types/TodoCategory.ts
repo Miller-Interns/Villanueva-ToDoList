@@ -9,4 +9,3 @@ export interface TodoCategory {
   title: string;
   items: TodoItem[];
 }
-

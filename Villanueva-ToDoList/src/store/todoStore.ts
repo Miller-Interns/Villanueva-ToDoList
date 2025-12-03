@@ -7,7 +7,6 @@ const STORAGE_KEY = 'todo-list-data';
 export const useTodoStore = defineStore('todo', () => {
   const categories = ref<TodoCategory[]>([]);
 
-  // Load data from localStorage
   const loadFromStorage = () => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -19,39 +18,31 @@ export const useTodoStore = defineStore('todo', () => {
     }
   };
 
-  // Save data to localStorage
   const saveToStorage = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(categories.value));
   };
 
-  // Initialize from storage
   loadFromStorage();
 
-  // Add new category
   const addCategory = (title: string) => {
-    // Check for duplicates (case-insensitive)
-    const exists = categories.value.some(
-      cat => cat.title.toLowerCase() === title.toLowerCase()
-    );
+    const exists = categories.value.some(cat => cat.title.toLowerCase() === title.toLowerCase());
     if (exists) {
       return { success: false, error: 'A category with this name already exists.' };
     }
-    
+
     const newCategory: TodoCategory = {
       id: Date.now().toString(),
       title,
-      items: []
+      items: [],
     };
     categories.value.push(newCategory);
     saveToStorage();
     return { success: true, id: newCategory.id };
   };
 
-  // Update category title
   const updateCategoryTitle = (categoryId: string, newTitle: string) => {
     const category = categories.value.find(c => c.id === categoryId);
     if (category) {
-      // Check for duplicates (excluding current category)
       const exists = categories.value.some(
         c => c.id !== categoryId && c.title.toLowerCase() === newTitle.toLowerCase()
       );
@@ -65,7 +56,6 @@ export const useTodoStore = defineStore('todo', () => {
     return { success: false, error: 'Category not found.' };
   };
 
-  // Delete category
   const deleteCategory = (categoryId: string) => {
     const index = categories.value.findIndex(c => c.id === categoryId);
     if (index !== -1) {
@@ -74,11 +64,9 @@ export const useTodoStore = defineStore('todo', () => {
     }
   };
 
-  // Add item to category
   const addItem = (categoryId: string, text: string) => {
     const category = categories.value.find(c => c.id === categoryId);
     if (category) {
-      // Check for duplicates
       const exists = category.items.some(item => item.text.toLowerCase() === text.toLowerCase());
       if (exists) {
         return { success: false, error: 'This item already exists in this category.' };
@@ -86,7 +74,7 @@ export const useTodoStore = defineStore('todo', () => {
       const newItem: TodoItem = {
         id: Date.now().toString(),
         text,
-        completed: false
+        completed: false,
       };
       category.items.push(newItem);
       saveToStorage();
@@ -95,16 +83,19 @@ export const useTodoStore = defineStore('todo', () => {
     return { success: false, error: 'Category not found.' };
   };
 
-  // Update item text
   const updateItemText = (categoryId: string, itemId: string, newText: string) => {
     const category = categories.value.find(c => c.id === categoryId);
     if (category) {
       const item = category.items.find(i => i.id === itemId);
       if (item) {
-        // Check for duplicates (excluding current item)
-        const exists = category.items.some(i => i.id !== itemId && i.text.toLowerCase() === newText.toLowerCase());
+        const exists = category.items.some(
+          i => i.id !== itemId && i.text.toLowerCase() === newText.toLowerCase()
+        );
         if (exists) {
-          return { success: false, error: 'An item with this text already exists in this category.' };
+          return {
+            success: false,
+            error: 'An item with this text already exists in this category.',
+          };
         }
         item.text = newText;
         saveToStorage();
@@ -115,7 +106,6 @@ export const useTodoStore = defineStore('todo', () => {
     return { success: false, error: 'Category not found.' };
   };
 
-  // Toggle item completion
   const toggleItemCompleted = (categoryId: string, itemId: string) => {
     const category = categories.value.find(c => c.id === categoryId);
     if (category) {
@@ -127,7 +117,6 @@ export const useTodoStore = defineStore('todo', () => {
     }
   };
 
-  // Delete item
   const deleteItem = (categoryId: string, itemId: string) => {
     const category = categories.value.find(c => c.id === categoryId);
     if (category) {
@@ -147,7 +136,6 @@ export const useTodoStore = defineStore('todo', () => {
     addItem,
     updateItemText,
     toggleItemCompleted,
-    deleteItem
+    deleteItem,
   };
 });
-

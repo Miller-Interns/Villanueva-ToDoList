@@ -1,51 +1,53 @@
 <template>
   <div class="category-header">
     <div v-if="isEditingTitle === category.id" class="edit-title-container">
-      <input
-        v-model="editingTitle"
-        @keyup.enter="saveTitle(category.id)"
-        @keyup.esc="cancelEditTitle"
-        :class="{ error: errorMessage }"
-        class="title-input"
-        type="text"
-      />
-      <div class="edit-actions">
-        <button @click="saveTitle(category.id)" class="save-btn">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13.3333 4L6 11.3333L2.66667 8"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Save
-        </button>
-        <button @click="cancelEditTitle" class="cancel-btn">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 4L4 12M4 4L12 12"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Cancel
-        </button>
+      <div class="edit-title-row">
+        <input
+          v-model="editingTitle"
+          @keyup.enter="saveTitle(category.id)"
+          @keyup.esc="cancelEditTitle"
+          :class="{ error: errorMessage }"
+          class="title-input"
+          type="text"
+        />
+        <div class="edit-actions">
+          <button @click="saveTitle(category.id)" class="save-btn">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.3333 4L6 11.3333L2.66667 8"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Save
+          </button>
+          <button @click="cancelEditTitle" class="cancel-btn">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 4L4 12M4 4L12 12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Cancel
+          </button>
+        </div>
       </div>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </div>
@@ -149,8 +151,15 @@ const {
   gap: 0.75rem;
 }
 
-.title-input {
+.edit-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   width: 100%;
+}
+
+.title-input {
+  flex: 1;
   padding: 0.75rem 1rem;
   border: 2px solid #e5e7eb;
   border-radius: 0.5rem;

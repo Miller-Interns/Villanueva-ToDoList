@@ -1,10 +1,12 @@
 import { ref } from 'vue';
 import { useTodoStore } from '../store/todoStore';
 
+// Shared state outside the function so all components using this composable share the same state
+const isEditingItem = ref<string | null>(null);
+const editingItemText = ref('');
+
 export function useTodoItem() {
   const store = useTodoStore();
-  const isEditingItem = ref<string | null>(null);
-  const editingItemText = ref('');
 
   const startEditItem = (itemId: string, currentText: string) => {
     isEditingItem.value = itemId;

@@ -58,7 +58,6 @@ export function useTodoCategory() {
     saveTitle,
     cancelEditTitle,
     createCategory,
-    removeCategory
+    removeCategory,
   };
 }
-

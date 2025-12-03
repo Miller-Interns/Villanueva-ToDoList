@@ -58,7 +58,6 @@ export function useTodoItem() {
     cancelEditItem,
     createItem,
     toggleComplete,
-    removeItem
+    removeItem,
   };
 }
-

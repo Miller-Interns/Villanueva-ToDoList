@@ -15,8 +15,6 @@ const router = useRouter();
 const goToApp = () => {
   router.push('/app');
 };
-
-
 </script>
 
 <style scoped>
@@ -56,7 +54,9 @@ const goToApp = () => {
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .go-to-app-button:hover {
@@ -68,4 +68,3 @@ const goToApp = () => {
   transform: translateY(0);
 }
 </style>
-

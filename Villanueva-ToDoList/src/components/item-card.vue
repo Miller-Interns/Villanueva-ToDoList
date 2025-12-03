@@ -7,7 +7,25 @@
         @change="toggleComplete(categoryId, item.id)"
         class="checkbox"
       />
-      <span class="checkmark"></span>
+      <span class="checkmark">
+        <svg
+          v-if="item.completed"
+          class="checkmark-icon"
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
     </label>
     <span class="item-text">{{ item.text }}</span>
     <div class="item-actions">
@@ -93,6 +111,9 @@ const { startEditItem, toggleComplete, removeItem } = useTodoItem();
   border-radius: 0.375rem;
   transition: all 0.2s;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkbox-label:hover .checkmark {
@@ -105,21 +126,8 @@ const { startEditItem, toggleComplete, removeItem } = useTodoItem();
   border-color: #10b981;
 }
 
-.checkmark:after {
-  content: '';
-  position: absolute;
-  display: none;
-}
-
-.checkbox:checked ~ .checkmark:after {
+.checkmark-icon {
   display: block;
-  left: 0.375rem;
-  top: 0.125rem;
-  width: 0.375rem;
-  height: 0.625rem;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
 }
 
 .item-text {
